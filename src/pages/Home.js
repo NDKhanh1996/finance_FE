@@ -2,12 +2,14 @@ import {useState} from "react";
 import Calendar from "react-calendar";
 import 'react-calendar/dist/Calendar.css';
 import {BlockService} from "../service/block.service";
+import PreviewTable from "../components/previewTable/PreviewTable";
 
 export function Home() {
     const [dateRange, setDateRange] = useState([new Date(), new Date()]);
-    const [senderAddress, setSenderAddress] = useState("");
-    const [receiverAddress, setReceiverAddress] = useState("");
-    const [contractAddress, setContractAddress] = useState("");
+    const [contractAddress, setContractAddress] = useState("0x55d398326f99059fF775485246999027B3197955");
+    const [senderAddress, setSenderAddress] = useState("0xBd004AC7D6cBdE024d49838dbe6F8aE54e54F53D");
+    const [receiverAddress, setReceiverAddress] = useState("0xd41DC89c2812a25156c8bD25Ca1078Ae309d439A");
+    const [dataApiFromBsc, setDataApiFromBsc] = useState([]);
     const onChange = (dateRange) => {
         setDateRange(dateRange);
     }
@@ -29,10 +31,11 @@ export function Home() {
             const token = contractAddress;
             const sender = senderAddress;
             const receiver = receiverAddress;
-            const dateFrom = dateRange[0].toISOString().slice(0,19);
-            const dateTill = dateRange[1].toISOString().slice(0,19);
+            const dateFrom = dateRange[0].toISOString().slice(0, 19);
+            const dateTill = dateRange[1].toISOString().slice(0, 19);
             const res = await BlockService.getDataApiFromBsc({token, sender, receiver, dateFrom, dateTill});
-            console.log(res)
+            setDataApiFromBsc(res.data);
+            console.log(dataApiFromBsc)
         } catch (e) {
             console.log(e);
         }
@@ -60,6 +63,12 @@ export function Home() {
             }}>
                 <input
                     type="text"
+                    placeholder="Contract address"
+                    value={contractAddress}
+                    onChange={handleContractAddress}
+                />
+                <input
+                    type="text"
                     placeholder="Sender address"
                     value={senderAddress}
                     onChange={handleSenderAddress}
@@ -70,18 +79,15 @@ export function Home() {
                     value={receiverAddress}
                     onChange={handleReceiverAddress}
                 />
-                <input
-                    type="text"
-                    placeholder="Contract address"
-                    value={contractAddress}
-                    onChange={handleContractAddress}
-                />
                 <button
                     onClick={getDataApiFromBsc}
                 >
                     Submit
                 </button>
             </div>
+            <PreviewTable
+                dataApiFromBsc={dataApiFromBsc}
+            />
         </div>
     )
 }
