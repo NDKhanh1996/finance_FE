@@ -9,6 +9,8 @@ thead tr {
 
 thead th, tbody td {
     border: 1px solid #ddd;
+    text-align: center;
+    font-size: x-small;
 }
 
 tbody tr {

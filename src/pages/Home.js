@@ -3,6 +3,7 @@ import Calendar from "react-calendar";
 import 'react-calendar/dist/Calendar.css';
 import {BlockService} from "../service/block.service";
 import PreviewTable from "../components/previewTable/PreviewTable";
+import {ExcelService} from "../service/excel.service";
 
 export function Home() {
     const [dateRange, setDateRange] = useState([new Date(), new Date()]);
@@ -10,6 +11,7 @@ export function Home() {
     const [senderAddress, setSenderAddress] = useState("0xBd004AC7D6cBdE024d49838dbe6F8aE54e54F53D");
     const [receiverAddress, setReceiverAddress] = useState("0xd41DC89c2812a25156c8bD25Ca1078Ae309d439A");
     const [dataApiFromBsc, setDataApiFromBsc] = useState([]);
+
     const onChange = (dateRange) => {
         setDateRange(dateRange);
     }
@@ -35,10 +37,13 @@ export function Home() {
             const dateTill = dateRange[1].toISOString().slice(0, 19);
             const res = await BlockService.getDataApiFromBsc({token, sender, receiver, dateFrom, dateTill});
             setDataApiFromBsc(res.data);
-            console.log(dataApiFromBsc)
         } catch (e) {
             console.log(e);
         }
+    }
+
+    const exportExcel = () => {
+        ExcelService.exportToExcel(dataApiFromBsc);
     }
 
     return (
@@ -85,9 +90,13 @@ export function Home() {
                     Submit
                 </button>
             </div>
-            <PreviewTable
-                dataApiFromBsc={dataApiFromBsc}
-            />
+            <PreviewTable dataApiFromBsc={dataApiFromBsc}/>
+            <button
+                onClick={exportExcel}
+                style={{marginTop: "10px"}}
+            >
+                Export excel
+            </button>
         </div>
     )
 }

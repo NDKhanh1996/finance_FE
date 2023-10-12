@@ -1,7 +1,7 @@
 import React from 'react';
 import './PreviewTable.css';
 
-export function PreviewTable ({ dataApiFromBsc }) {
+export function PreviewTable({dataApiFromBsc}) {
     return (
         dataApiFromBsc.length > 0 && (
             <div>
@@ -24,7 +24,7 @@ export function PreviewTable ({ dataApiFromBsc }) {
                     </thead>
                     <tbody>
                     {dataApiFromBsc.map((data, index) => {
-                        return(
+                        return (
                             <tr key={index}>
                                 <td>{index}</td>
                                 <td>{data.amount}</td>
@@ -45,6 +45,6 @@ export function PreviewTable ({ dataApiFromBsc }) {
             </div>
         )
     );
-};
+}
 
 export default PreviewTable;
