@@ -1,6 +1,7 @@
 import {useState} from "react";
 import Calendar from "react-calendar";
 import 'react-calendar/dist/Calendar.css';
+import {BlockService} from "../service/block.service";
 
 export function Home() {
     const [dateRange, setDateRange] = useState([new Date(), new Date()]);
@@ -21,6 +22,20 @@ export function Home() {
 
     const handleContractAddress = (e) => {
         setContractAddress(e.target.value);
+    }
+
+    const getDataApiFromBsc = async () => {
+        try {
+            const token = contractAddress;
+            const sender = senderAddress;
+            const receiver = receiverAddress;
+            const dateFrom = dateRange[0].toISOString().slice(0,19);
+            const dateTill = dateRange[1].toISOString().slice(0,19);
+            const res = await BlockService.getDataApiFromBsc({token, sender, receiver, dateFrom, dateTill});
+            console.log(res)
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     return (
@@ -62,7 +77,7 @@ export function Home() {
                     onChange={handleContractAddress}
                 />
                 <button
-
+                    onClick={getDataApiFromBsc}
                 >
                     Submit
                 </button>
