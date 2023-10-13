@@ -8,6 +8,6 @@ export class BlockService {
     }
 
     static async getDataApiFromBscOnlyReceiver(objectData) {
-        return await axios.get(API_URL + "/data/onlyReceiver", objectData);
+        return await axios.post(API_URL + "/api/blocks/data/onlyReceiver", objectData);
     }
 }
