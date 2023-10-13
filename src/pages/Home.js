@@ -8,9 +8,9 @@ import PreviewTableOnlyReceiver from "../components/previewTableOnlyReceiver/pre
 
 export function Home() {
     const [dateRange, setDateRange] = useState([new Date(), new Date()]);
-    const [contractAddress, setContractAddress] = useState("0x55d398326f99059fF775485246999027B3197955");
-    const [senderAddress, setSenderAddress] = useState("0xBd004AC7D6cBdE024d49838dbe6F8aE54e54F53D");
-    const [receiverAddress, setReceiverAddress] = useState("0xd41DC89c2812a25156c8bD25Ca1078Ae309d439A");
+    const [contractAddress, setContractAddress] = useState("");
+    const [senderAddress, setSenderAddress] = useState("");
+    const [receiverAddress, setReceiverAddress] = useState("");
     const [dataApiFromBsc, setDataApiFromBsc] = useState([]);
     const [senderAndReceiverOPT, setSenderAndReceiverOPT] = useState(true);
     const [receiverOPT, setReceiverOPT] = useState(false);
